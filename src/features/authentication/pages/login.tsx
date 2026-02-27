@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';

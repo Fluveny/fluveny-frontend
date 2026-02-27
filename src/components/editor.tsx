@@ -25,7 +25,7 @@ export const Editor = ({
   initialContent,
   error,
 }: EditorProps) => {
-  const { register, setValue, getValues } = useFormContext();
+  const { register, setValue, getValues, formState } = useFormContext();
   const updateDraftData = useGrammarRuleModuleWindows(
     (state) => state.updateDraftData,
   );
@@ -69,7 +69,7 @@ export const Editor = ({
       const html = editor.getHTML();
       const value = html === '<p></p>' ? '' : html;
       setValue(registerCamp, value, {
-        shouldValidate: true,
+        shouldValidate: formState.isSubmitted,
         shouldDirty: true,
       });
     },

@@ -1,4 +1,4 @@
-import type { ExerciseStyle } from '@/@types/exercise';
+import type { ExerciseStyle } from '@/features/module/types/exercise';
 import type { WindowType } from '@/@types/module';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -6,6 +6,7 @@ import type { BuildPhraseExerciseForm } from '../schemas/build-phrase-schema';
 import type { FillInTheBlankSchemaForm } from '../schemas/fill-in-the-blanks-schema';
 import type { PresentationForm } from '../schemas/presentation-schema';
 import type { TranslateExerciseForm } from '../schemas/translate-exercise-schema';
+import { createOrderedListActions } from './create-ordered-list-store';
 
 type PresentationWindow = {
   id?: string;
@@ -41,81 +42,37 @@ type GrammarRuleModuleWindowsStoreState = {
 export const useGrammarRuleModuleWindows =
   create<GrammarRuleModuleWindowsStoreState>()(
     persist(
-      (set) => ({
-        windowsList: [],
-        currentPosition: null,
-        setWindowsList: (list) => {
-          const listWithClientIds = list.map((w) => ({
-            ...w,
-            clientId: w.id || crypto.randomUUID(),
-          }));
-          set({ windowsList: listWithClientIds });
-        },
-        setCurrentPosition: (position) => set({ currentPosition: position }),
-        addWindow: (index, type, style) =>
-          set((state) => {
-            const newList = [...state.windowsList];
-            let newWindow: WindowsType;
+      (set) => {
+        const orderedListActions = createOrderedListActions<WindowsType>(set, {
+          listKey: 'windowsList',
+        });
 
+        return {
+          windowsList: [],
+          currentPosition: null,
+          setWindowsList: orderedListActions.setItems,
+          setCurrentPosition: (position) => set({ currentPosition: position }),
+          addWindow: (index, type, style) => {
             if (type === 'EXERCISE') {
-              newWindow = {
+              const newWindow: ExerciseWindow = {
                 type: 'EXERCISE',
                 style: style || 'TRANSLATE',
-                clientId: crypto.randomUUID(),
                 draftData: {},
               };
+              orderedListActions.addItem(index, newWindow);
             } else {
-              newWindow = {
+              const newWindow: PresentationWindow = {
                 type: 'PRESENTATION',
-                clientId: crypto.randomUUID(),
                 draftData: {},
               };
+              orderedListActions.addItem(index, newWindow);
             }
-
-            newList.splice(index, 0, newWindow);
-            return { windowsList: newList, currentPosition: index };
-          }),
-        moveWindow: (dragIndex, hoverIndex) =>
-          set((state) => {
-            const reordered = [...state.windowsList];
-            const [dragged] = reordered.splice(dragIndex, 1);
-            reordered.splice(hoverIndex, 0, dragged);
-
-            return { windowsList: reordered };
-          }),
-        updateDraftData: (index, data) =>
-          set((state) => {
-            const newList = [...state.windowsList];
-            if (newList[index]) {
-              newList[index].draftData = data;
-            }
-            return { windowsList: newList };
-          }),
-        removeWindow: (indexToRemove) =>
-          set((state) => {
-            const oldPosition = state.currentPosition;
-            const newList = state.windowsList.filter(
-              (_, index) => index !== indexToRemove,
-            );
-
-            if (newList.length === 0) {
-              return { windowsList: [], currentPosition: null };
-            }
-
-            if (oldPosition === null) {
-              return { windowsList: newList };
-            }
-
-            let newPosition = oldPosition;
-            if (indexToRemove < oldPosition) {
-              newPosition = oldPosition - 1;
-            } else if (indexToRemove === oldPosition) {
-              newPosition = Math.max(0, oldPosition - 1);
-            }
-
-            return { windowsList: newList, currentPosition: newPosition };
-          }),
-      }),
+          },
+          moveWindow: orderedListActions.moveItem,
+          updateDraftData: orderedListActions.updateDraftData,
+          removeWindow: orderedListActions.removeItem,
+        };
+      },
       {
         name: 'windows-grammar-rule-module',
       },

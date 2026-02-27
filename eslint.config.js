@@ -39,7 +39,8 @@ export default [
       'react/prop-types': 'off',
       ...reactHooks.configs.recommended.rules,
       'prettier/prettier': 'error',
-      'no-unused-vars': [
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
         'error',
         {
           vars: 'all',

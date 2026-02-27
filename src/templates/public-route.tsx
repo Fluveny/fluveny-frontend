@@ -1,5 +1,5 @@
 import { ROUTES } from '@/app/configs/routes';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { type ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { LoadingScreen } from './loading-screen';

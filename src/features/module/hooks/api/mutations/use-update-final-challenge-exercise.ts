@@ -1,4 +1,4 @@
-import type { ExerciseRequest } from '@/@types/exercise';
+import type { ExerciseRequest } from '@/features/module/types/exercise';
 import { updateFinalChallengeExercise } from '@/features/module/services/mutation/update-final-challenge-exercise';
 import { useMutation } from '@tanstack/react-query';
 
