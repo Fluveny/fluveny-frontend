@@ -1,6 +1,6 @@
-import { useAuthStore } from "@/features/authentication/stores/auth-store";
-import { CreatorDashboard } from "../components/creator-dashboard";
-import { StudentDashboard } from "../components/student-dashboard";
+import { useAuthStore } from '@/stores/auth-store';
+import { CreatorDashboard } from './creator-dashboard';
+import { StudentDashboard } from './student-dashboard';
 
 export const DashboardPage = () => {
   const { user } = useAuthStore();
