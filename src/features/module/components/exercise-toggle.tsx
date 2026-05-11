@@ -6,6 +6,7 @@ interface SkillToggleProps {
   onClick: () => void;
   label: string;
   icon: ReactNode;
+  disabled?: boolean;
 }
 
 export const SkillToggle = ({
@@ -13,13 +14,17 @@ export const SkillToggle = ({
   onClick,
   label,
   icon,
+  disabled,
 }: SkillToggleProps) => {
   return (
-    <div className="m-2 flex flex-1 flex-col items-center">
+    <div
+      className={`m-2 flex flex-1 flex-col items-center ${disabled ? 'cursor-not-allowed opacity-35' : ''}`}
+    >
       <Toggle
-        className="data-[state=on]:border-primary flex h-24 w-24 cursor-pointer items-center justify-center border-2"
+        className={`data-[state=on]:border-primary flex h-24 w-24 items-center justify-center border-2 ${!disabled ? 'cursor-pointer' : 'pointer-events-none'}`}
         onPressedChange={onClick}
         pressed={isPressed}
+        disabled={disabled}
       >
         {icon}
       </Toggle>
