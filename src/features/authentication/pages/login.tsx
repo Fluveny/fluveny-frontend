@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isAxiosError } from 'axios';
 import { ArrowRight } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
@@ -28,6 +29,22 @@ export const LoginPage = () => {
           setUser(response);
           toast.success('Usuário logado com sucesso!');
           navigator('/dashboard');
+        },
+        onError: (error) => {
+          if (isAxiosError(error) && error.response) {
+            const status = error.response.status;
+            if (status === 401 || status === 423) {
+              methods.setError('root', {
+                message:
+                  'Credenciais inválidas. Verifique seu usuário e senha.',
+              });
+              return;
+            }
+          }
+
+          methods.setError('root', {
+            message: 'Ocorreu um erro inesperado ao tentar fazer login.',
+          });
         },
       },
     );
@@ -83,6 +100,11 @@ export const LoginPage = () => {
                 field="password"
                 hasError={!!methods.formState.errors.password}
               />
+              {methods.formState.errors.root && (
+                <p className="mt-1 text-sm text-red-500">
+                  {methods.formState.errors.root.message as string}
+                </p>
+              )}
             </form>
           </FormProvider>
           <div className="space-y-4 py-4">
