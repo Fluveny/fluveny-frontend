@@ -6,7 +6,7 @@ import { NotFound } from '@/templates/not-found';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Trash2, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { toast } from 'sonner';
 import { Distration } from '../components/distration';
@@ -43,7 +43,11 @@ export const FormFinalChallengeBuildPhrasePage = () => {
       exerciseId,
     });
 
-  const distractors = methods.watch('distractors') || [];
+  const distractors =
+    useWatch({
+      control: methods.control,
+      name: 'distractors',
+    }) || [];
 
   const [modalState, setModalState] = useState<{
     open: boolean;

@@ -9,10 +9,12 @@ import { useQuery } from '@tanstack/react-query';
 export const useGetSearchStudentModules = (
   filters: ModuleSearchFilters,
   pagination: PaginationParams,
+  enabled: boolean = true,
 ) => {
   const { data, ...rest } = useQuery<GetSearchStudentModules>({
-    queryKey: ['student-modules', filters],
+    queryKey: ['student-modules', filters, pagination],
     queryFn: () => getSearchStudentModules(filters, pagination),
+    enabled,
   });
 
   return { modules: data?.data, ...rest };

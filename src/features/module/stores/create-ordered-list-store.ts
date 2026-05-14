@@ -61,7 +61,9 @@ export function createOrderedListActions<T extends OrderedItem>(
       set((state) => {
         const currentList = (state[listKey] as T[]) || [];
         const oldPosition = state.currentPosition as number | null;
-        const newList = currentList.filter((_, index) => index !== indexToRemove);
+        const newList = currentList.filter(
+          (_, index) => index !== indexToRemove,
+        );
 
         if (newList.length === 0) {
           return { [listKey]: [], currentPosition: null };

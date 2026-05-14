@@ -52,7 +52,10 @@ describe('createOrderedListActions', () => {
 
   describe('addItem', () => {
     it('should add item at the specified index', () => {
-      state.items = [{ type: 'A', clientId: '1' }, { type: 'C', clientId: '3' }];
+      state.items = [
+        { type: 'A', clientId: '1' },
+        { type: 'C', clientId: '3' },
+      ];
 
       actions.addItem(1, { type: 'B' });
 

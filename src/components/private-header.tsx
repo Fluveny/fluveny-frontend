@@ -1,8 +1,9 @@
 import { UserProfile } from '@/components/user-profile';
 import { UserProfileSkeleton } from '@/components/user-profile-skeleton';
-import { LayoutGrid, Menu, X } from 'lucide-react';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
+import { BarChart3, LayoutGrid, Menu, Users, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { Button } from './ui/button';
 
@@ -11,12 +12,59 @@ const menuVariants = {
   open: { height: 'auto', opacity: 1, transition: { duration: 0.3 } },
 };
 
+interface NavItem {
+  to: string;
+  label: string;
+  icon: ReactNode;
+}
+
+const adminNavItems: NavItem[] = [
+  {
+    to: '/admin/creators',
+    label: 'Gerenciar Criadores',
+    icon: <Users className="text-primary size-5" />,
+  },
+  {
+    to: '/admin/reports',
+    label: 'Relatórios',
+    icon: <BarChart3 className="text-primary size-5" />,
+  },
+];
+
+const creatorNavItems: NavItem[] = [
+  {
+    to: '/modules',
+    label: 'Módulos',
+    icon: <LayoutGrid className="text-primary size-5" />,
+  },
+  {
+    to: '/modules/drafts',
+    label: 'Gerenciar Módulos',
+    icon: <LayoutGrid className="text-primary size-5" />,
+  },
+];
+
+const defaultNavItems: NavItem[] = [
+  {
+    to: '/modules',
+    label: 'Módulos',
+    icon: <LayoutGrid className="text-primary size-5" />,
+  },
+];
+
 export function PrivateHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const isLoading = false;
+  const { isLoading, user } = useAuthStore();
 
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const navItems =
+    user?.role === 'ADMIN'
+      ? adminNavItems
+      : user?.role === 'CONTENT_CREATOR'
+        ? creatorNavItems
+        : defaultNavItems;
 
   useEffect(() => {
     const handleClickOutSide = (event: MouseEvent) => {
@@ -60,10 +108,17 @@ export function PrivateHeader() {
             className="h-10 lg:h-12"
           />
         </Link>
+
         <nav className="hidden space-x-12 px-10 lg:flex">
-          <Link to="/modules" className="hover:text-primary text-lg">
-            Módulos
-          </Link>
+          {navItems.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="hover:text-primary text-lg"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
       </div>
 
@@ -80,16 +135,18 @@ export function PrivateHeader() {
             variants={menuVariants}
           >
             <ul className="z-50 flex flex-col divide-y">
-              <li>
-                <Link
-                  to="/modules"
-                  className="flex items-center gap-2 px-4 py-3 text-lg"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <LayoutGrid className="text-primary size-5" />
-                  Módulos
-                </Link>
-              </li>
+              {navItems.map((item) => (
+                <li key={item.to}>
+                  <Link
+                    to={item.to}
+                    className="flex items-center gap-2 px-4 py-3 text-lg"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.icon}
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </motion.nav>
         )}

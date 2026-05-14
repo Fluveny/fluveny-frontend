@@ -1,5 +1,11 @@
 export const ROUTES = {
   dashboard: '/dashboard',
+  profile: '/profile',
+  settings: '/settings',
+  onboarding: '/onboarding',
+  forceResetPassword: '/force-reset-password',
+  adminCreators: '/admin/creators',
+  adminReports: '/admin/reports',
   modules: '/modules',
   introduction: 'introduction',
   drafts: 'drafts',

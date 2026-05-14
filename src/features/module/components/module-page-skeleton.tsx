@@ -1,4 +1,7 @@
+import { useState } from 'react';
+
 export default function FormModulePageSkeleton() {
+  const [randomCount] = useState(() => Math.floor(Math.random() * 3) + 1);
   return (
     <>
       <div className="h-32 animate-pulse bg-zinc-200" />
@@ -7,7 +10,7 @@ export default function FormModulePageSkeleton() {
 
         <div className="m-2 mt-14 h-12 w-80 animate-pulse rounded-md bg-zinc-200 md:w-180 lg:w-145" />
         <div className="flex">
-          {[...Array(Math.floor(Math.random() * 3) + 1)].map((_, i) => (
+          {[...Array(randomCount)].map((_, i) => (
             <div
               key={i}
               className="m-2 h-6 w-30 animate-pulse rounded-md bg-zinc-200 lg:h-8"

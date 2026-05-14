@@ -1,7 +1,17 @@
 export type UserRole = 'STUDENT' | 'CONTENT_CREATOR' | 'ADMIN';
 
 export type User = {
-  name: string;
+  username: string;
+  name?: string;
   role: UserRole;
   email: string;
+  avatar?: string;
+  background?: string;
+  level?: number;
+  xp?: number;
+  maxXp?: number;
+  soundEnabled?: boolean;
+  requiresPasswordReset?: boolean;
+  isActive?: boolean;
+  lastLoginAt?: string;
 };

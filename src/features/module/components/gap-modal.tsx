@@ -30,9 +30,12 @@ export const GapModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      setWords(initialData.words || []);
-      setJustification(initialData.justification || '');
-      setCurrentWord('');
+      // Defer state updates to avoid synchronous setState in effect
+      setTimeout(() => {
+        setWords(initialData?.words ?? []);
+        setJustification(initialData?.justification ?? '');
+        setCurrentWord('');
+      }, 0);
     }
   }, [isOpen, initialData]);
 

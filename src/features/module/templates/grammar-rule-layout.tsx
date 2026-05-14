@@ -9,8 +9,8 @@ import { GrammarRuleWindowList } from '../components/grammar-rule-window-list';
 import FormPresentationPageSkeleton from '../components/presentation-page-skeleton';
 import { useUpdateGrammarRuleWindows } from '../hooks/api/mutations/use-update-grammar-rule-windows';
 import {
-    useGrammarRuleModuleWindows,
-    type WindowsType,
+  useGrammarRuleModuleWindows,
+  type WindowsType,
 } from '../stores/use-grammar-rule-module-windows';
 
 export const GrammarRuleLayout = () => {
@@ -44,6 +44,25 @@ export const GrammarRuleLayout = () => {
 
     return !isNavigatingWithinEditor;
   });
+
+  const onSendWindowsPosition = (data: WindowsType[]) => {
+    const windowsWithId = data
+      .filter((w) => w.id)
+      .map((w) => {
+        if (w.type === 'EXERCISE') {
+          return { id: w.id, type: w.type, style: w.style };
+        }
+        return { id: w.id, type: w.type };
+      });
+
+    updateGrammarRuleWindows.mutate(
+      { moduleId, data: windowsWithId, grammarRuleId },
+      {
+        onSuccess: () =>
+          toast.success('Ordem das janelas alteradas com sucesso!'),
+      },
+    );
+  };
 
   useEffect(() => {
     if (blocker.state === 'blocked' && !hasDraftWindows) {
@@ -86,7 +105,13 @@ export const GrammarRuleLayout = () => {
       setWindowsList([{ type: 'PRESENTATION', clientId: crypto.randomUUID() }]);
       setCurrentPosition(0);
     }
-  }, [windows, isLoadingWindows, setWindowsList, setCurrentPosition, grammarRuleId]);
+  }, [
+    windows,
+    isLoadingWindows,
+    setWindowsList,
+    setCurrentPosition,
+    grammarRuleId,
+  ]);
 
   useEffect(() => {
     if (
@@ -117,25 +142,6 @@ export const GrammarRuleLayout = () => {
   }
 
   if (!moduleId || !grammarRuleId) return <NotFound />;
-
-  const onSendWindowsPosition = (data: WindowsType[]) => {
-    const windowsWithId = data
-      .filter((w) => w.id)
-      .map((w) => {
-        if (w.type === 'EXERCISE') {
-          return { id: w.id, type: w.type, style: w.style };
-        }
-        return { id: w.id, type: w.type };
-      });
-
-    updateGrammarRuleWindows.mutate(
-      { moduleId, data: windowsWithId, grammarRuleId },
-      {
-        onSuccess: () =>
-          toast.success('Ordem das janelas alteradas com sucesso!'),
-      },
-    );
-  };
 
   return (
     <DndProvider key={grammarRuleId}>

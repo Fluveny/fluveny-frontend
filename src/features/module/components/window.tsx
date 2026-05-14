@@ -2,7 +2,7 @@ import type { WindowType } from '@/@types/module';
 import { cn } from '@/app/utils/cn';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { BowArrow, Presentation, Trash2 } from 'lucide-react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { DragPreviewImage, useDrag, useDrop } from 'react-dnd';
 import { AddWindow } from './add-window';
 
@@ -85,7 +85,10 @@ export const Window = ({
     }),
   });
 
-  drag(drop(ref));
+  // Connect drag source and drop target after refs are set
+  useEffect(() => {
+    drag(drop(ref));
+  }, [drag, drop]);
 
   return (
     <>

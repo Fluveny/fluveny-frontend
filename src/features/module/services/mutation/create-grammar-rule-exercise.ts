@@ -1,4 +1,7 @@
-import type { ExerciseRequest, ExerciseResponse } from '@/features/module/types/exercise';
+import type {
+  ExerciseRequest,
+  ExerciseResponse,
+} from '@/features/module/types/exercise';
 import { api } from '@/app/libs/api';
 
 interface ModuleExerciseResponse {
