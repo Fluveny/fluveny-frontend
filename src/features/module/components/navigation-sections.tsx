@@ -1,10 +1,15 @@
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useGetAllGrammarRule } from '../hooks/api/queries/use-get-all-grammar-rule';
+import { usePublishModule } from '../hooks/api/mutations/use-publish-module';
 import { NavigationSectionsSkeleton } from './navigation-sections-skeleton';
 import { SectionButton } from './section-button';
+import { Button } from '@/components/ui/button';
+import { ROUTES } from '@/app/configs/routes';
 
 export const NavigationSections = () => {
   const { moduleId } = useParams();
+  const navigate = useNavigate();
+  const { mutate: publishModule, isPending } = usePublishModule();
 
   const { data, isLoading, isError } = useGetAllGrammarRule(moduleId);
 
@@ -33,6 +38,19 @@ export const NavigationSections = () => {
           );
         })}
         <SectionButton title="Desafio Final" variant="finalChallenge" />
+        <Button
+          onClick={() => {
+            if (moduleId) {
+              publishModule(moduleId, {
+                onSuccess: () => navigate(`${ROUTES.modules}/${moduleId}`),
+              });
+            }
+          }}
+          disabled={isPending}
+          className="ml-auto"
+        >
+          {isPending ? 'Publicando...' : 'Publicar Módulo'}
+        </Button>
       </div>
     </footer>
   );

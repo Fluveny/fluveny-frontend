@@ -6,7 +6,7 @@ import { NotFound } from '@/templates/not-found';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { toast } from 'sonner';
 import { DistractorModal } from '../components/distractor-modal';
@@ -46,7 +46,11 @@ export const FormGrammarRuleBuildPhrasePage = () => {
     },
   });
 
-  const distractors = methods.watch('distractors') || [];
+  const distractors =
+    useWatch({
+      control: methods.control,
+      name: 'distractors',
+    }) || [];
 
   const [modalState, setModalState] = useState<{
     open: boolean;

@@ -45,6 +45,16 @@ export const FinalChallengeLayout = () => {
     return !isNavigatingWithinEditor;
   });
 
+  const onSendExercisesPosition = (data: Exercise[]) => {
+    if (!moduleId) return;
+
+    const exerciseIds = data.filter((w) => w.id).map(({ id }) => id as string);
+
+    if (exerciseIds.length > 0) {
+      updateExercisesMutation.mutate({ moduleId, data: exerciseIds });
+    }
+  };
+
   useEffect(() => {
     if (blocker.state === 'blocked' && !hasDraftExercises) {
       onSendExercisesPosition(exerciseList);
@@ -136,16 +146,6 @@ export const FinalChallengeLayout = () => {
       }
     }
   }, [currentPosition, exerciseList, navigate]);
-
-  const onSendExercisesPosition = (data: Exercise[]) => {
-    if (!moduleId) return;
-
-    const exerciseIds = data.filter((w) => w.id).map(({ id }) => id as string);
-
-    if (exerciseIds.length > 0) {
-      updateExercisesMutation.mutate({ moduleId, data: exerciseIds });
-    }
-  };
 
   if (isLoadingExercises) {
     return <FormExercisePageSkeleton />;

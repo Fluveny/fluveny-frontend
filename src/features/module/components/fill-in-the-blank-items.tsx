@@ -1,6 +1,6 @@
 import type { PhraseElement } from '@/features/module/schemas/fill-in-the-blanks-schema';
 import type { Identifier } from 'dnd-core';
-import { useRef, type ChangeEvent, type FocusEvent } from 'react';
+import { useEffect, useRef, type ChangeEvent, type FocusEvent } from 'react';
 import { DragPreviewImage, useDrag, useDrop, type XYCoord } from 'react-dnd';
 import { Input } from '../../../components/ui/input';
 
@@ -74,7 +74,10 @@ export const DraggablePhraseItem = ({
     }),
   });
 
-  drag(drop(ref));
+  // Connect drag source and drop target after refs are set
+  useEffect(() => {
+    drag(drop(ref));
+  }, [drag, drop]);
 
   return (
     <>

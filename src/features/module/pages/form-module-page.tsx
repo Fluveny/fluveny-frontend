@@ -97,25 +97,28 @@ export const FormModulePage = () => {
             <LevelSelect name="id_level" level={moduleData?.level.id} />
           </FormSectionWrapper>
           <FormSectionWrapper label="Tempo estimado" htmlFor="estimatedTime">
-            <div className="flex items-center gap-2">
-              <Input
-                {...methods.register('estimatedTime', { valueAsNumber: true })}
-                type="number"
-                className="w-18 py-6 text-center"
-                max={600}
-                min={1}
-              />
-              <span className="">min</span>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <Input
+                  {...methods.register('estimatedTime', { valueAsNumber: true })}
+                  type="number"
+                  className="w-24 py-6 text-center"
+                  max={600}
+                  min={1}
+                />
+                <span className="">min</span>
+              </div>
+              {methods.formState.errors.estimatedTime && (
+                <p className="text-sm text-red-500">
+                  {methods.formState.errors.estimatedTime.message as string}
+                </p>
+              )}
             </div>
           </FormSectionWrapper>
           <FormSectionWrapper label="Descrição" htmlFor="description">
             <DescriptionField />
           </FormSectionWrapper>
-          <Button
-            type="submit"
-            className="mt-8 w-full py-8 text-xl font-bold"
-            size="xl"
-          >
+          <Button type="submit" className="mt-8 w-full py-8 text-xl font-bold">
             <span>{isEditMode ? 'Editar' : 'Criar'}</span>
           </Button>
           {isEditMode && (

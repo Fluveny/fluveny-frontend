@@ -1,3 +1,4 @@
+import { ROUTES } from '@/app/configs/routes';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,7 +29,11 @@ export const LoginPage = () => {
         onSuccess: (response) => {
           setUser(response);
           toast.success('Usuário logado com sucesso!');
-          navigator('/dashboard');
+          if (response.role === 'ADMIN') {
+            navigator(ROUTES.adminCreators);
+          } else {
+            navigator('/dashboard');
+          }
         },
         onError: (error) => {
           if (isAxiosError(error) && error.response) {
@@ -37,6 +42,12 @@ export const LoginPage = () => {
               methods.setError('root', {
                 message:
                   'Credenciais inválidas. Verifique seu usuário e senha.',
+              });
+              return;
+            }
+            if (status === 403) {
+              methods.setError('root', {
+                message: 'Sua conta foi desativada pelo administrador.',
               });
               return;
             }
@@ -85,7 +96,7 @@ export const LoginPage = () => {
               id="register_student"
             >
               <RegisterCamp
-                label="Nome de usuário"
+                label="Nome de usuário ou email"
                 type="text"
                 field="usernameOrEmail"
                 hasError={!!methods.formState.errors.usernameOrEmail}

@@ -10,14 +10,17 @@ export const moduleFormSchema = z.object({
     .array(z.string())
     .min(1, 'Selecione ao menos um tópico')
     .max(5, 'Máximo de 5 tópicos'),
-  id_level: z.string().min(1, 'Nível de dificuldade é obrigatório'),
+  id_level: z.string().min(1, 'Selecione o nível de dificuldade'),
   description: z
     .string()
     .trim()
     .min(10, 'Descrição deve ter no mínimo 10 caracteres')
     .max(500, 'Descrição deve ter no máximo 500 caracteres'),
   estimatedTime: z
-    .number()
+    .number({
+      required_error: 'Informe o tempo estimado',
+      invalid_type_error: 'Informe o tempo estimado',
+    })
     .min(1, 'O tempo estimado deve ter no mínimo 1 minuto')
     .max(600, 'O tempo estimado deve ter no máximo 600 minutos'),
 });

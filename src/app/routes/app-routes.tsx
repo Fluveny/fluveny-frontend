@@ -1,5 +1,11 @@
+import { AdminCreatorsPage } from '@/features/authentication/pages/admin-creators-page';
+import { AdminReportsPage } from '@/features/authentication/pages/admin-reports-page';
+import { ForceResetPasswordPage } from '@/features/authentication/pages/force-reset-password-page';
 import { LoginPage } from '@/features/authentication/pages/login';
+import { OnboardingPage } from '@/features/authentication/pages/onboarding-page';
+import { ProfilePage } from '@/features/authentication/pages/profile-page';
 import { RegisterPage } from '@/features/authentication/pages/register';
+import { SettingsPage } from '@/features/authentication/pages/settings-page';
 import { DashboardPage } from '@/features/dashboard/pages/dashboard-page';
 import { DraftsPage } from '@/features/module/pages/drafts-page';
 import { FormIntroductionPage } from '@/features/module/pages/form-introduction-page';
@@ -31,6 +37,66 @@ export const router = createBrowserRouter([
             redirect="/login"
           >
             <DashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTES.profile,
+        element: (
+          <ProtectedRoute
+            permittedRoles={['STUDENT', 'CONTENT_CREATOR', 'ADMIN']}
+            redirect="/login"
+          >
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTES.settings,
+        element: (
+          <ProtectedRoute
+            permittedRoles={['STUDENT', 'CONTENT_CREATOR', 'ADMIN']}
+            redirect="/login"
+          >
+            <SettingsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTES.onboarding,
+        element: (
+          <ProtectedRoute
+            permittedRoles={['STUDENT', 'CONTENT_CREATOR', 'ADMIN']}
+            redirect="/login"
+          >
+            <OnboardingPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTES.forceResetPassword,
+        element: (
+          <ProtectedRoute
+            permittedRoles={['STUDENT', 'CONTENT_CREATOR', 'ADMIN']}
+            redirect="/login"
+          >
+            <ForceResetPasswordPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTES.adminCreators,
+        element: (
+          <ProtectedRoute permittedRoles={['ADMIN']} redirect="/dashboard">
+            <AdminCreatorsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: ROUTES.adminReports,
+        element: (
+          <ProtectedRoute permittedRoles={['ADMIN']} redirect="/dashboard">
+            <AdminReportsPage />
           </ProtectedRoute>
         ),
       },

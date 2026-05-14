@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useImperativeHandle } from 'react';
 
 interface UseAutosizeTextAreaProps {
-  textAreaRef: React.MutableRefObject<HTMLTextAreaElement | null>;
+  textAreaRef: React.RefObject<HTMLTextAreaElement | null>;
   minHeight?: number;
   maxHeight?: number;
   triggerAutoSize: string;
@@ -25,7 +25,8 @@ export const useAutosizeTextArea = ({
         if (maxHeight > minHeight) {
           textAreaElement.style.maxHeight = `${maxHeight}px`;
         }
-        setInit(false);
+        // Defer state update to avoid synchronous setState in effect
+        setTimeout(() => setInit(false), 0);
       }
       textAreaElement.style.height = `${minHeight + offsetBorder}px`;
       const scrollHeight = textAreaElement.scrollHeight;
@@ -65,11 +66,16 @@ export const AutosizeTextarea = React.forwardRef<
     ref: React.Ref<AutosizeTextAreaRef>,
   ) => {
     const textAreaRef = React.useRef<HTMLTextAreaElement | null>(null);
-    const [triggerAutoSize, setTriggerAutoSize] = React.useState('');
+
+    const [internalValue, setInternalValue] = React.useState(
+      props.defaultValue ?? '',
+    );
+
+    const triggerValue = value !== undefined ? value : internalValue;
 
     useAutosizeTextArea({
       textAreaRef,
-      triggerAutoSize: triggerAutoSize,
+      triggerAutoSize: triggerValue as string,
       maxHeight,
       minHeight,
     });
@@ -81,10 +87,6 @@ export const AutosizeTextarea = React.forwardRef<
       minHeight,
     }));
 
-    React.useEffect(() => {
-      setTriggerAutoSize(value as string);
-    }, [props?.defaultValue, value]);
-
     return (
       <textarea
         {...props}
@@ -95,7 +97,10 @@ export const AutosizeTextarea = React.forwardRef<
           className,
         )}
         onChange={(e) => {
-          setTriggerAutoSize(e.target.value);
+          // 3. Only update the internal state if the component is uncontrolled
+          if (value === undefined) {
+            setInternalValue(e.target.value);
+          }
           onChange?.(e);
         }}
       />

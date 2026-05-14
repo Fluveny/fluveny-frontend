@@ -24,6 +24,7 @@ const gapElementSchemaWithID = z.object({
   justification: z.string(),
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const phraseElementSchema = z.discriminatedUnion('type', [
   textElementSchemaWithID,
   gapElementSchemaWithID,

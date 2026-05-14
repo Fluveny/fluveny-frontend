@@ -28,7 +28,8 @@ export const DistractorModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      setValue(initialData.value);
+      // Defer state update to avoid synchronous setState in effect
+      setTimeout(() => setValue(initialData.value), 0);
     }
   }, [isOpen, initialData.value]);
 
@@ -39,7 +40,7 @@ export const DistractorModal = ({
   const isCreating = initialData.index === null;
   const title = isCreating
     ? `Distração ${distractorsCount + 1}`
-    : `Distração ${initialData.index || 0 + 1}`;
+    : `Distração ${(initialData.index ?? 0) + 1}`;
 
   const handleSaveClick = () => {
     if (value.trim() === '') return;

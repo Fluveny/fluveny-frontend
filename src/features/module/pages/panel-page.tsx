@@ -1,5 +1,3 @@
-import { ROUTES } from '@/app/configs/routes';
-import { Button } from '@/components/ui/button';
 import {
   Pagination,
   PaginationContent,
@@ -12,16 +10,13 @@ import { LoadingScreen } from '@/templates/loading-screen';
 import { NotFound } from '@/templates/not-found';
 import { parseAsInteger, useQueryStates } from 'nuqs';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
 import { ModuleCard } from '../components/module-card';
 import { ModuleFilter, parsers } from '../components/module-filter';
+import { useGetCreatorModules } from '../hooks/api/queries/use-get-creator-modules';
 import { useGetSearchStudentModules } from '../hooks/api/queries/use-get-search-student-modules';
-
-const permittedRoles = ['ADMIN', 'CONTENT_CREATOR'];
 
 export const PanelPage = () => {
   const { user } = useAuthStore();
-
   const [query, setQuery] = useQueryStates({
     ...parsers,
     page: parseAsInteger.withDefault(1),
@@ -39,7 +34,10 @@ export const PanelPage = () => {
     };
   }, [filters]);
 
-  const { modules, isLoading, isError } = useGetSearchStudentModules(
+  const isCreator = user?.role === 'CONTENT_CREATOR';
+
+  // For students
+  const studentQuery = useGetSearchStudentModules(
     {
       moduleName: debouncedFilters.q,
       grammarRulesId: debouncedFilters.grammarRules,
@@ -50,9 +48,27 @@ export const PanelPage = () => {
       pageNumber: page - 1,
       pageSize: 10,
     },
+    !isCreator,
   );
 
-  const canViewDrafts = user && permittedRoles.includes(user.role);
+  // For creators
+  const creatorQuery = useGetCreatorModules(
+    'published',
+    {
+      moduleName: debouncedFilters.q,
+      grammarRulesId: debouncedFilters.grammarRules,
+      levelId: debouncedFilters.levels,
+    },
+    {
+      pageNumber: page - 1,
+      pageSize: 10,
+    },
+    isCreator,
+  );
+
+  const { modules, isLoading, isError } = isCreator
+    ? creatorQuery
+    : studentQuery;
 
   const renderContent = () => {
     if (isLoading) {
@@ -63,7 +79,7 @@ export const PanelPage = () => {
       return <NotFound />;
     }
 
-    if (!modules || modules.size === 0) {
+    if (!modules || modules.content.length === 0) {
       return (
         <div className="flex w-full justify-center text-lg">
           Nenhum módulo encontrado com os filtros aplicados.
@@ -94,20 +110,12 @@ export const PanelPage = () => {
       <h1 className="mt-2 text-center text-3xl font-bold tracking-widest lg:mt-8 lg:text-4xl">
         Módulos
       </h1>
-      {canViewDrafts && (
-        <Button
-          className="text-md ml-auto h-10 rounded-md px-6 font-normal lg:py-6 lg:text-lg"
-          asChild
-        >
-          <Link to={`${ROUTES.drafts}`}>Rascunhos</Link>
-        </Button>
-      )}
 
-      <ModuleFilter />
+      <ModuleFilter isCreator={isCreator} />
 
       {renderContent()}
 
-      {!isLoading && !isError && modules && (
+      {!isLoading && !isError && modules && modules.totalPages > 0 && (
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationItem>
