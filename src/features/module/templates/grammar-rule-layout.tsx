@@ -9,8 +9,8 @@ import { GrammarRuleWindowList } from '../components/grammar-rule-window-list';
 import FormPresentationPageSkeleton from '../components/presentation-page-skeleton';
 import { useUpdateGrammarRuleWindows } from '../hooks/api/mutations/use-update-grammar-rule-windows';
 import {
-  useGrammarRuleModuleWindows,
-  type WindowsType,
+    useGrammarRuleModuleWindows,
+    type WindowsType,
 } from '../stores/use-grammar-rule-module-windows';
 
 export const GrammarRuleLayout = () => {
@@ -86,7 +86,7 @@ export const GrammarRuleLayout = () => {
       setWindowsList([{ type: 'PRESENTATION', clientId: crypto.randomUUID() }]);
       setCurrentPosition(0);
     }
-  }, [windows, isLoadingWindows, setWindowsList, setCurrentPosition]);
+  }, [windows, isLoadingWindows, setWindowsList, setCurrentPosition, grammarRuleId]);
 
   useEffect(() => {
     if (

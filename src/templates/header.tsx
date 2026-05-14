@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { PrivateHeader } from '../components/private-header';
 import { PublicHeader } from '../components/public-header';
 

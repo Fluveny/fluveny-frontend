@@ -1,5 +1,5 @@
 import type { UserRole } from '@/@types/user';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import type { ReactNode } from 'react';
 import { Navigate, Outlet } from 'react-router';
 

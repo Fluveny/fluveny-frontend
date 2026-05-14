@@ -1,9 +1,7 @@
 {
-  // Prettier
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
-  // ESlint
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.organizeImports": "always"
@@ -15,6 +13,7 @@
     "typescriptreact"
   ],
 
-  // Typescript
-  "typescript.suggest.autoImports": true
+  "typescript.suggest.autoImports": true,
+
+  "eslint.workingDirectories": [{ "mode": "auto" }]
 }

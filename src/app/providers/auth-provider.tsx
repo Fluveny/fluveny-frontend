@@ -1,5 +1,5 @@
-import { useGetUserInformation } from '@/hooks/use-get-user-information';
-import { useAuthStore } from '@/stores/auth-store';
+import { useGetUserInformation } from '@/features/authentication/hooks/use-get-user-information';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { LoadingScreen } from '@/templates/loading-screen';
 import { useEffect, type ReactNode } from 'react';
 

@@ -7,7 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { useAuthStore } from '@/stores/auth-store';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { LoadingScreen } from '@/templates/loading-screen';
 import { NotFound } from '@/templates/not-found';
 import { parseAsInteger, useQueryStates } from 'nuqs';

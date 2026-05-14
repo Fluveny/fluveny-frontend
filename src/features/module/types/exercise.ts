@@ -1,6 +1,6 @@
-import type { BuildPhraseExerciseForm } from '@/features/module/schemas/build-phrase-schema';
-import type { FillInTheBlankSchemaForm } from '@/features/module/schemas/fill-in-the-blanks-schema';
-import type { TranslateExerciseForm } from '@/features/module/schemas/translate-exercise-schema';
+import type { BuildPhraseExerciseForm } from '../schemas/build-phrase-schema';
+import type { FillInTheBlankSchemaForm } from '../schemas/fill-in-the-blanks-schema';
+import type { TranslateExerciseForm } from '../schemas/translate-exercise-schema';
 
 export type ExerciseStyle =
   | 'TRANSLATE'

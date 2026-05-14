@@ -94,7 +94,7 @@ export const SelectGrammarRule = ({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" side="bottom" className="w-90 p-0 lg:w-100">
+      <PopoverContent align="start" side="bottom" className="w-76 p-0 lg:w-100">
         <Command className="p-2 text-left">
           <CommandInput
             className="text-md"

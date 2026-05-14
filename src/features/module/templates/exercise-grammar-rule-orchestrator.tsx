@@ -1,4 +1,4 @@
-import type { ExerciseStyle } from '@/@types/exercise';
+import type { ExerciseStyle } from '@/features/module/types/exercise';
 import { NotFound } from '@/templates/not-found';
 import type React from 'react';
 import { useParams } from 'react-router';

@@ -16,14 +16,11 @@ export const CheckboxGroup = <T extends string>({
   onValueChange,
 }: CheckboxGroupProps<T>) => {
   return (
-    <div className="grid gap-3">
+    <div className="grid w-full gap-4">
       <Label className="text-md font-bold">{title}</Label>
-      <div className="grid grid-cols-3 gap-x-4 gap-y-3">
+      <div className="grid grid-cols-3 gap-x-6 gap-y-3">
         {items.map((item) => (
-          <Label
-            key={item.value}
-            className="text-md flex items-center gap-2 font-normal"
-          >
+          <Label key={item.value} className="text-md font-normal">
             <Checkbox
               checked={selectedValues.includes(item.value)}
               onCheckedChange={() => onValueChange(item.value)}

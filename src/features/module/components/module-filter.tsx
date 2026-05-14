@@ -3,13 +3,14 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Search, SlidersHorizontal, X } from 'lucide-react';
+import { Search, SlidersHorizontal, Trash, X } from 'lucide-react';
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs';
 import { createParser } from 'nuqs/server';
 import { useState } from 'react';
@@ -152,6 +153,9 @@ export const ModuleFilter = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle className="text-lg">Filtros</DialogTitle>
+              <DialogDescription className="text-zinc-500">
+                Selecione as opções abaixo para refinar a busca.
+              </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-6 py-4">
               <div className="space-y-2">
@@ -182,6 +186,17 @@ export const ModuleFilter = () => {
                 selectedValues={filters.statuses}
                 onValueChange={handleStatusChange}
               />
+
+              {hasActiveFilters && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={handleClearFilters}
+                  className={'hover:text-destructive'}
+                >
+                  Remover filtros <Trash className="size-4" />
+                </Button>
+              )}
             </div>
           </DialogContent>
         </Dialog>

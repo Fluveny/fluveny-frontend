@@ -1,4 +1,4 @@
-import { getUserInformation } from '@/services/get-user-information';
+import { getUserInformation } from '@/features/authentication/services/get-user-information';
 import { useQuery } from '@tanstack/react-query';
 
 export const useGetUserInformation = () => {

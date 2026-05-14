@@ -1,4 +1,4 @@
-import type { ExerciseStyle } from './exercise';
+import type { ExerciseStyle } from '@/features/module/types/exercise';
 
 export type Module = {
   id: string;

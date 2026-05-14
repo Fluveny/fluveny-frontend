@@ -1,4 +1,4 @@
-import type { ExerciseBaseResponse } from '@/@types/exercise';
+import type { ExerciseBaseResponse } from '@/features/module/types/exercise';
 import { api } from '@/app/libs/api';
 
 export interface GetFinalChallengeExercisesResponse {

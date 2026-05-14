@@ -1,4 +1,4 @@
-import type { ExerciseStyle } from '@/@types/exercise';
+import type { ExerciseStyle } from '@/features/module/types/exercise';
 import type { LinguisticAbility, WindowType } from '@/@types/module';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,16 +27,19 @@ const linguisticSkills = [
     id: 'WRITE',
     label: 'Escrita',
     icon: <PencilLine className="size-8" />,
+    disabled: false,
   },
   {
     id: 'LISTEN',
     label: 'Audição',
     icon: <AudioLines className="size-8" />,
+    disabled: true,
   },
   {
     id: 'READ',
     label: 'Leitura',
     icon: <Eye className="size-8" />,
+    disabled: true,
   },
 ] as const;
 
@@ -169,6 +172,7 @@ export default function ExerciseSelector({
                   isPressed={languageSkill === skill.id}
                   icon={skill.icon}
                   label={skill.label}
+                  disabled={skill.disabled}
                 />
               ))}
             </div>

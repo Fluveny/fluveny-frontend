@@ -52,7 +52,7 @@ export const ModuleVisualizationPage = () => {
         <h2 className="text-center text-4xl font-bold">{module?.title}</h2>
         <ul className="mt-2 flex justify-center gap-4">
           {module?.grammarRules.map((g) => {
-            return <Tag name={g.title} variant="blue" />;
+            return <Tag key={g.id} name={g.title} variant="blue" />;
           })}
         </ul>
         <p className="mt-4 text-lg">{module?.description}</p>

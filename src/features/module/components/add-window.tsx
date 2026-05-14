@@ -1,4 +1,4 @@
-import type { ExerciseStyle } from '@/@types/exercise';
+import type { ExerciseStyle } from '@/features/module/types/exercise';
 import type { WindowType } from '@/@types/module';
 import { cn } from '@/app/utils/cn';
 import { Button } from '@/components/ui/button';

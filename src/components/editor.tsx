@@ -25,7 +25,7 @@ export const Editor = ({
   initialContent,
   error,
 }: EditorProps) => {
-  const { register, setValue, getValues } = useFormContext();
+  const { register, setValue, getValues, formState } = useFormContext();
   const updateDraftData = useGrammarRuleModuleWindows(
     (state) => state.updateDraftData,
   );
@@ -69,7 +69,7 @@ export const Editor = ({
       const html = editor.getHTML();
       const value = html === '<p></p>' ? '' : html;
       setValue(registerCamp, value, {
-        shouldValidate: true,
+        shouldValidate: formState.isSubmitted,
         shouldDirty: true,
       });
     },
@@ -99,8 +99,9 @@ export const Editor = ({
         <Toolbar />
         <EditorContent
           editor={editor}
+          onClick={() => editor?.commands.focus()}
           className={cn(
-            'prose prose-sm md:prose-lg prose-img:mx-auto prose-p:text-lg min-h-50 max-w-none rounded-md border p-4 lg:min-h-100',
+            'prose prose-sm md:prose-lg prose-img:mx-auto prose-p:text-lg min-h-50 max-w-none cursor-text rounded-md border px-8 py-4 lg:min-h-100',
             error && 'animate-shake border-red-500 text-red-500',
           )}
         />
