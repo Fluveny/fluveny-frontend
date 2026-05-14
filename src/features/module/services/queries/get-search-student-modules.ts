@@ -38,7 +38,7 @@ export const getSearchStudentModules = async (
     params: {
       moduleName: filters.moduleName || undefined,
       grammarRulesId: filters.grammarRulesId,
-      levelId: filters.levelId,
+      levelsId: filters.levelId,
       status: formattedStatuses,
       pageNumber: pagination.pageNumber,
       pageSize: pagination.pageSize,
