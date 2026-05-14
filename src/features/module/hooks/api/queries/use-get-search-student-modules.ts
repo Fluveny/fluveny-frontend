@@ -11,7 +11,7 @@ export const useGetSearchStudentModules = (
   pagination: PaginationParams,
 ) => {
   const { data, ...rest } = useQuery<GetSearchStudentModules>({
-    queryKey: ['student-modules', filters],
+    queryKey: ['student-modules', filters, pagination],
     queryFn: () => getSearchStudentModules(filters, pagination),
   });
 
