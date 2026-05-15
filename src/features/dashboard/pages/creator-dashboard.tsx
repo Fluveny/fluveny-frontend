@@ -1,5 +1,6 @@
 import { ROUTES } from '@/app/configs/routes';
 import { Button } from '@/components/ui/button';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { useGetModules } from '@/features/module/hooks/api/queries/use-get-modules';
 import { LoadingScreen } from '@/templates/loading-screen';
 import { NotFound } from '@/templates/not-found';
@@ -12,6 +13,7 @@ import { SubTitle } from '../components/subtitle';
 export const CreatorDashboard = () => {
   const { modules, isLoading, isError } = useGetModules();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -25,7 +27,7 @@ export const CreatorDashboard = () => {
     <div className="flex w-full flex-col gap-6 p-6 md:p-8">
       <DashboardHeader
         title="Volte de onde você parou"
-        username="Joe Doe"
+        username={user?.name}
         description="Seus últimos módulos nos rascunhos:"
       />
       <div className="w-full px-8 md:px-12 lg:px-16">

@@ -1,7 +1,7 @@
 import { SubTitle } from './subtitle';
 
 interface DashboardHeaderProps {
-  username: string;
+  username: string | undefined;
   title: string;
   description: string;
 }
@@ -14,7 +14,8 @@ export const DashboardHeader = ({
   return (
     <div className="flex flex-col gap-5 lg:gap-6">
       <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
-        Bem-vindo de volta, <span className="text-primary">{username}</span>!
+        Bem-vindo de volta,{' '}
+        <span className="text-primary">{username || 'Usuário'}</span>!
       </h1>
       <SubTitle title={title} description={description} />
     </div>

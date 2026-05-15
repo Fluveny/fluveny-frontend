@@ -1,5 +1,6 @@
 import { ROUTES } from '@/app/configs/routes';
 import { Card, CardContent } from '@/components/ui/card';
+import { useAuthStore } from '@/features/authentication/stores/auth-store';
 import { useGetModules } from '@/features/module/hooks/api/queries/use-get-modules';
 import { LoadingScreen } from '@/templates/loading-screen';
 import { NotFound } from '@/templates/not-found';
@@ -12,6 +13,7 @@ import { SubTitle } from '../components/subtitle';
 export const StudentDashboard = () => {
   const { modules, isLoading, isError } = useGetModules();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -24,7 +26,7 @@ export const StudentDashboard = () => {
   return (
     <div className="flex w-full flex-col gap-8 p-6 md:p-8">
       <DashboardHeader
-        username="João"
+        username={user?.name}
         title="Volte de onde você parou."
         description="Continue trabalhando no seu progresso"
       />
