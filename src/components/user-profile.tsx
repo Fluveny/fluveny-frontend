@@ -19,7 +19,11 @@ export const UserProfile = () => {
 
   return (
     <div className="flex gap-5">
-      <div className="hidden w-65 flex-col justify-center lg:flex">
+      <div className={`hidden flex-col items-end justify-center lg:flex ${
+        user?.role === 'CONTENT_CREATOR' || user?.role === 'ADMIN'
+        ? 'items-end'
+        : 'w-56'
+      }`}>
         {user?.role === 'CONTENT_CREATOR' || user?.role === 'ADMIN' ? (
           <div className="flex items-end gap-2">
             <span className="text-foreground text-md font-semibold">
