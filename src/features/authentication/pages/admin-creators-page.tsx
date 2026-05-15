@@ -97,9 +97,24 @@ export function AdminCreatorsPage() {
       setEmail('');
       fetchCreators(page); // Refresh list
     } catch (error: any) {
-      toast.error(
-        error.response?.data?.message || 'Erro ao criar criador de conteúdo.',
-      );
+
+      const apiResponse = error.response?.data;
+      const specificError = apiResponse?.data?.error;
+      
+      if (specificError && specificError.field) {
+        if (specificError.field === 'email') {
+          toast.error('E-mail: Um usuário com esse e-mail já existe.');
+        } else if (specificError.field === 'username') {
+          toast.error('Usuário: Um usuário com esse login já existe.');
+        } else {
+          toast.error(`Erro no campo ${specificError.field}: dados inválidos.`);
+        }
+      } 
+      
+      else {
+        toast.error('Erro ao criar criador de conteúdo. Verifique os dados inseridos.');
+      }
+
     } finally {
       setIsSubmitting(false);
     }

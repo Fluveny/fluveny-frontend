@@ -32,6 +32,13 @@ export const FormModulePage = () => {
 
   const methods = useForm<ModuleForm>({
     resolver: zodResolver(moduleFormSchema),
+    defaultValues: {
+      title: '',
+      id_grammarRules: [],
+      id_level: '',
+      description: '',
+      estimatedTime: 0,
+    },
   });
 
   const createModuleMutation = useCreateModule();
