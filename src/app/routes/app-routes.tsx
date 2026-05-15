@@ -1,3 +1,4 @@
+import LandingPage from '@/components/landing-page';
 import { AdminCreatorsPage } from '@/features/authentication/pages/admin-creators-page';
 import { AdminReportsPage } from '@/features/authentication/pages/admin-reports-page';
 import { ForceResetPasswordPage } from '@/features/authentication/pages/force-reset-password-page';
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
       {
         path: ROUTES.dashboard,
         element: (

@@ -4,15 +4,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import {
-  ArrowRight,
-  CircleUser,
-  Info,
-  LogIn,
-  Menu,
-  MessageCircleQuestion,
-  X,
-} from 'lucide-react';
+import { CircleUser, LogIn, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
@@ -20,14 +12,15 @@ export const PublicHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="flex justify-between border-b-1 p-4">
+    // ADICIONADO: relative, z-50 e bg-white
+    <header className="relative z-50 flex justify-between border-b bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between gap-2 not-md:w-full">
         <Popover open={menuOpen} onOpenChange={setMenuOpen}>
           <PopoverTrigger asChild>
             <Button
               aria-label={menuOpen ? 'Fechar Menu' : 'Abrir Menu'}
               variant="ghost"
-              className="cursor-pointer not-md:order-1"
+              className="cursor-pointer not-md:order-1 md:hidden"
             >
               {menuOpen ? (
                 <X className="size-8" />
@@ -41,26 +34,6 @@ export const PublicHeader = () => {
             className="w-screen rounded-sm p-0 shadow-md md:max-w-64 md:border-2"
           >
             <ul className="z-50 flex flex-col items-end divide-y pr-4">
-              <li className="w-full">
-                <Link
-                  to="/about"
-                  className="flex items-center justify-center gap-2 px-4 py-3 text-lg"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <Info className="text-primary" />
-                  Sobre nós
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
-                  to="/help"
-                  className="flex items-center justify-center gap-2 px-4 py-3 text-lg"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <MessageCircleQuestion className="text-primary" />
-                  Ajuda
-                </Link>
-              </li>
               <li className="w-full">
                 <Link
                   to="/login"
@@ -84,7 +57,7 @@ export const PublicHeader = () => {
             </ul>
           </PopoverContent>
         </Popover>
-        <Link to="/dashboard">
+        <Link to="/">
           <img
             src="/assets/logo.svg"
             alt="Logo Fluveny"
@@ -99,10 +72,9 @@ export const PublicHeader = () => {
         </Link>
         <Link
           to="/register"
-          className="text-primary hidden items-center text-xl underline md:flex"
+          className="text-primary hidden cursor-pointer items-center text-xl hover:underline md:flex"
         >
           Cadastre-se
-          <ArrowRight />
         </Link>
       </div>
     </header>
