@@ -45,6 +45,15 @@ import { useEffect, useState, type SyntheticEvent } from 'react';
 import { toast } from 'sonner';
 import { LoadingScreen } from '@/templates/loading-screen';
 
+const parseDate = (dateVal: string | number[] | null) => {
+  if (!dateVal) return null;
+  if (Array.isArray(dateVal)) {
+    const [year, month, day, hour = 0, minute = 0, second = 0] = dateVal;
+    return new Date(year, month - 1, day, hour, minute, second);
+  }
+  return new Date(dateVal);
+};
+
 export function AdminCreatorsPage() {
   const [creators, setCreators] = useState<Creator[]>([]);
   const [page, setPage] = useState(0);
@@ -283,7 +292,7 @@ export function AdminCreatorsPage() {
                   <TableCell>{creator.modulesCount || 0}</TableCell>
                   <TableCell>
                     {creator.lastLoginAt
-                      ? new Date(creator.lastLoginAt).toLocaleDateString(
+                      ? parseDate(creator.lastLoginAt)?.toLocaleDateString(
                           'pt-BR',
                           {
                             day: '2-digit',

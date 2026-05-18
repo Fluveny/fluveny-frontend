@@ -17,7 +17,7 @@ export interface Creator {
   email: string;
   name: string | null;
   requiresPasswordReset: boolean;
-  lastLoginAt: string | null;
+  lastLoginAt: string | number[] | null;
   isActive: boolean;
   modulesCount: number;
 }
