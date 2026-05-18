@@ -95,7 +95,7 @@ export const DraftsPage = () => {
         <Link to={`${ROUTES.modules}/${ROUTES.create}`}>Criar Módulo</Link>
       </Button>
 
-      <ModuleFilter />
+      <ModuleFilter isCreator />
 
       {renderContent()}
 

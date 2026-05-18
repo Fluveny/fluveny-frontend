@@ -45,7 +45,7 @@ export const parsers = {
   ).withDefault([]),
 };
 
-export const ModuleFilter = () => {
+export const ModuleFilter = ({ isCreator }: { isCreator?: boolean }) => {
   const [filters, setFilters] = useQueryStates(parsers);
 
   const [selectedGrammarRules, setSelectedGrammarRules] = useState<
@@ -118,15 +118,17 @@ export const ModuleFilter = () => {
             onValueChange={handleLevelChange}
           />
 
-          <FilterDropdown
-            triggerText="Status"
-            items={Object.entries(statusOptions).map(([value, label]) => ({
-              value: value as StatusKey,
-              label,
-            }))}
-            selectedValues={filters.statuses}
-            onValueChange={handleStatusChange}
-          />
+          {!isCreator && (
+            <FilterDropdown
+              triggerText="Status"
+              items={Object.entries(statusOptions).map(([value, label]) => ({
+                value: value as StatusKey,
+                label,
+              }))}
+              selectedValues={filters.statuses}
+              onValueChange={handleStatusChange}
+            />
+          )}
 
           {hasActiveFilters && (
             <Button
@@ -177,15 +179,17 @@ export const ModuleFilter = () => {
                 onValueChange={handleLevelChange}
               />
 
-              <CheckboxGroup
-                title="Status do Módulo"
-                items={Object.entries(statusOptions).map(([value, label]) => ({
-                  value: value as StatusKey,
-                  label,
-                }))}
-                selectedValues={filters.statuses}
-                onValueChange={handleStatusChange}
-              />
+              {!isCreator && (
+                <CheckboxGroup
+                  title="Status do Módulo"
+                  items={Object.entries(statusOptions).map(([value, label]) => ({
+                    value: value as StatusKey,
+                    label,
+                  }))}
+                  selectedValues={filters.statuses}
+                  onValueChange={handleStatusChange}
+                />
+              )}
 
               {hasActiveFilters && (
                 <Button

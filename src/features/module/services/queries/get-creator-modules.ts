@@ -36,7 +36,7 @@ export const getCreatorModules = async (
     params: {
       moduleName: filters.moduleName || undefined,
       grammarRulesId: filters.grammarRulesId,
-      levelId: filters.levelId,
+      levelsId: filters.levelId,
       pageNumber: pagination.pageNumber,
       pageSize: pagination.pageSize,
     },
