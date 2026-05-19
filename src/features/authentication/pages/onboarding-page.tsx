@@ -42,7 +42,7 @@ export function OnboardingPage() {
 
   // If user already has a name, redirect to dashboard
   useEffect(() => {
-    if (user?.name) {
+    if (user?.name && !user?.requiresProfileSetup) {
       navigate('/dashboard');
     }
   }, [user, navigate]);
