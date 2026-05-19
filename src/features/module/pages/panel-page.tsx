@@ -46,7 +46,7 @@ export const PanelPage = () => {
     },
     {
       pageNumber: page - 1,
-      pageSize: 10,
+      pageSize: 6,
     },
     !isCreator,
   );
@@ -61,7 +61,7 @@ export const PanelPage = () => {
     },
     {
       pageNumber: page - 1,
-      pageSize: 10,
+      pageSize: 6,
     },
     isCreator,
   );
