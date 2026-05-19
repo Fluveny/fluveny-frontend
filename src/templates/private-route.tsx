@@ -68,11 +68,26 @@ export const ProtectedRoute = ({
     return <Navigate to={redirect} replace />;
   }
 
+  const isForceResetRoute = window.location.pathname === '/force-reset-password';
+  if (user?.requiresPasswordReset && !isForceResetRoute) {
+    return <Navigate to="/force-reset-password" replace />;
+  }
+
   const isOnboardingRoute = window.location.pathname === '/onboarding';
+  if (
+    user &&
+    !user.requiresPasswordReset &&
+    user.requiresProfileSetup &&
+    !isOnboardingRoute
+  ) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
   if (
     user &&
     !user.name &&
     !user.requiresPasswordReset &&
+    !user.requiresProfileSetup &&
     user.role === 'STUDENT' &&
     !isOnboardingRoute
   ) {

@@ -42,7 +42,9 @@ export const useAuthStore = create<AuthStoreState>((set) => ({
       await import('../services/user');
     const updatedUser = await updateProfileService(data);
     set((state) => ({
-      user: state.user ? { ...state.user, ...updatedUser } : null,
+      user: state.user
+        ? { ...state.user, ...updatedUser, requiresProfileSetup: false }
+        : null,
     }));
   },
   updateSettings: async (data) => {
@@ -50,7 +52,9 @@ export const useAuthStore = create<AuthStoreState>((set) => ({
       await import('../services/user');
     const updatedUser = await updateSettingsService(data);
     set((state) => ({
-      user: state.user ? { ...state.user, ...updatedUser } : null,
+      user: state.user 
+      ? { ...state.user, ...updatedUser, requiresProfileSetup: false }
+      : null,
     }));
   },
   resetPassword: async (data) => {
