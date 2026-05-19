@@ -12,6 +12,7 @@ export type User = {
   maxXp?: number;
   soundEnabled?: boolean;
   requiresPasswordReset?: boolean;
+  requiresProfileSetup?: boolean; 
   isActive?: boolean;
   lastLoginAt?: string;
 };
